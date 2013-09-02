@@ -18,10 +18,8 @@ To build the code:
 
   <pre><code> ant buildAndDeploy </code></pre>
 
-To run server application:
+Copy generated `server.war` file to webapps in Tomcat and start server
 
-   <pre><code> ant runServer </code></pre>
-   
 ## Use and TestCases
 
 * As this application is using websocket plugin of HTML - 5 so it will only work on browser which supports <br>

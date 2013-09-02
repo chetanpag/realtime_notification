@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Collective Web Notification DashBoard</title>
+<script>
+var params = {};
+    if (location.search) {
+        var parts = location.search.substring(1).split('&');
+        for (var i = 0; i < parts.length; i++) {
+            var nv = parts[i].split('=');
+            if (!nv[0]) continue;
+            params[nv[0]] = nv[1] || true;
+        }
+    }
+      var ws = new WebSocket("ws://localhost:8080/notification_server/nserver?t="+params.t);
+              ws.onopen = function(){     
+                  
+              };
+              ws.onmessage = function(message){
+                  var JSONObject = JSON.parse(message.data);            	 
+            	  document.getElementById("notification_header").innerHTML = "Notifications : " + JSONObject.messageCount;
+            	  var notificationDiv = document.getElementById("notification");
+           	  
+				  for(var messageCount=0;messageCount<JSONObject.messageCount;messageCount++)
+					  {
+					  	var content = document.createTextNode(JSONObject.message[messageCount]);
+			        	notificationDiv.appendChild(content);	
+			        	notificationDiv.appendChild(document.createElement('br'));		        	
+					  }
+              };
+              function closeConnect(){
+                  ws.close();
+                  window.location.href = "http://localhost:8080/notification_server/";
+              }
+</script>
+</head>
+<body>
+	<h2>DashBoard</h2>
+	<div id="left_nav" style="float: left">
+		<h2>Cybage Collective: Real time UI Notification</h2>
+	</div>
+	<div id="right_nav" style="float: right;">
+		<button type="submit" id="sendButton" onClick="closeConnect()"
+			style="float: right; margin-right: 10px;">Logout</button>
+		<br> <br>
+		<div id="main_notification" style="border: solid 1px blue;">
+			<div id="notification_header"
+				style="background-color: #87CEEB; border: 1px solid red; font-weight: bold; text-align: center; width: 300px;">
+				Notifications :</div>
+			<div id="notification"></div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="notification_server" default="buildAndDeploy"
+	basedir=".">
+	<property file="build.properties" />
+	<path id="classpath">	
+		<fileset dir="lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<path id="classpath-web">
+		<fileset dir="${build.web.lib}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+	<target name="compile">
+		<echo message="Compiling..." />
+		<mkdir dir="${build.web.classes}" />
+		<mkdir dir="${build.web.lib}" />
+		<javac srcdir="${src.dir}" destdir="${build.web.classes}"
+			classpathref="classpath" debug="yes" />
+		<copy todir="${build.web.lib}">
+			<fileset dir="${basedir}/lib" />
+		</copy>
+		<copy file="WebContent/WEB-INF/web.xml" tofile="${build.web.web-inf}/web.xml" />
+	</target>
+	<target name="buildAndDeploy" depends="compile">
+		<echo message="Building the WAR file..." />
+		<war destfile="server.war" basedir="${build.web.root}" webxml="${build.web.web-inf}/web.xml" />
+	</target>
+</project>

@@ -15,7 +15,8 @@ public class AuthManager {
 		PreparedStatement pstmnt = null;
 		ResultSet rst = null;
 		try {
-			conn = DbConnManager.getConnection();
+			DbConnManager dbManager = new DbConnManager();
+			conn = dbManager.getConnection();
 			String q1 = "SELECT id FROM users WHERE user_name = ? AND password = ? ";
 			pstmnt = conn.prepareStatement(q1);
 			pstmnt.setString(1, username);

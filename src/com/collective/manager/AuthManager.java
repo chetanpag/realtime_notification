@@ -17,7 +17,6 @@ public class AuthManager {
 		try {
 			conn = DbConnManager.getConnection();
 			String q1 = "SELECT id FROM users WHERE user_name = ? AND password = ? ";
-
 			pstmnt = conn.prepareStatement(q1);
 			pstmnt.setString(1, username);
 			pstmnt.setString(2, password);
@@ -27,8 +26,14 @@ public class AuthManager {
 				auth = true;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} finally {
+			if (rst != null) {
+				rst.close();
+			}
+			if (pstmnt != null) {
+				pstmnt.close();
+			}
 			if (conn != null) {
 				conn.close();
 			}

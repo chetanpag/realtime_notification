@@ -1,9 +1,9 @@
-package com.allconnect.message;
+package com.collective.message;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Message {
+public class NotificationMessage {
 	private int userId;
 	private boolean globalMessage;
 	private List<String> message = new ArrayList<String>();

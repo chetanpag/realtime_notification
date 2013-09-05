@@ -1,4 +1,4 @@
-package com.allconnect.message;
+package com.collective.message;
 
 import java.io.IOException;
 import java.io.StringWriter;

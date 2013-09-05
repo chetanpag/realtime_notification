@@ -13,9 +13,9 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-import com.allconnect.message.JSonHelper;
-import com.allconnect.message.Message;
 import com.collective.manager.ConnectionManager;
+import com.collective.message.JSonHelper;
+import com.collective.message.NotificationMessage;
 import com.collective.server.WebsocketMessageInbound;
 
 public class NotificationConsumer {
@@ -25,8 +25,8 @@ public class NotificationConsumer {
 	private MessageConsumer consumer = null;
 	private static NotificationConsumer notificationConsumer;
 
-	private static final String QUEUE_HOST = "tcp://localhost:61616";
-	private static final String QUEUE_NAME = "ActiveMQ";
+	private final String QUEUE_HOST = "tcp://localhost:61616";
+	private final String QUEUE_NAME = "ActiveMQ";
 
 	private NotificationConsumer() {
 		init();
@@ -98,8 +98,9 @@ public class NotificationConsumer {
 			if (message != null) {
 				if (message instanceof TextMessage) {
 					try {
-						Message msg = (Message) JSonHelper.JSONStringToObject(
-								((TextMessage) message).getText(), Message.class);
+						NotificationMessage msg = (NotificationMessage) JSonHelper
+								.JSONStringToObject(((TextMessage) message).getText(),
+										NotificationMessage.class);
 						CharBuffer buffer = CharBuffer.wrap(((TextMessage) message).getText());
 
 						if (msg.isGlobalMessage()) {

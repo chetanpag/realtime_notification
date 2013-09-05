@@ -17,13 +17,13 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-import com.allconnect.message.JSonHelper;
-import com.allconnect.message.Message;
+import com.collective.message.JSonHelper;
+import com.collective.message.NotificationMessage;
 
 public class NotificationProducer {
 
-	private static final String QUEUE_HOST = "tcp://localhost:61616";
-	private static final String QUEUE_NAME = "ActiveMQ";
+	private final String QUEUE_HOST = "tcp://localhost:61616";
+	private final String QUEUE_NAME = "ActiveMQ";
 
 	public void sendMessage(boolean globalMessageFlag) {
 		Connection connection = null;
@@ -33,7 +33,7 @@ public class NotificationProducer {
 		try {
 			connection = connectionFactory.createConnection();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			Message msg = new Message();
+			NotificationMessage msg = new NotificationMessage();
 			int randomUserId = (int) (Math.random() * 3 + 1);
 			msg.setUserId(randomUserId);
 			msg.setGlobalMessage(globalMessageFlag);
